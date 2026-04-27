@@ -1,0 +1,34 @@
+name: Demo GitHub Actions
+
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: "Who should we greet?"
+        required: true
+        default: "team"
+
+jobs:
+  demo:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Show basic info
+        run: |
+          echo "Hello from GitHub Actions!"
+          echo "Running on: $RUNNER_OS"
+          echo "Repository: $GITHUB_REPOSITORY"
+          echo "Branch: $GITHUB_REF_NAME"
+
+      - name: Create a demo file
+        run: |
+          mkdir output
+          echo "Hello, ${{ inputs.name }}!" > output/message.txt
+          echo "This file was created by GitHub Actions." >> output/message.txt
+          cat output/message.txt
+
+      - name: Upload the demo file
+        uses: actions/upload-artifact@v4
+        with:
+          name: demo-output
+          path: output/message.txt
