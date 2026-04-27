@@ -1,0 +1,47 @@
+name: Simple GitHub Actions Demo
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Choose demo environment"
+        required: true
+        default: "staging"
+        type: choice
+        options:
+          - staging
+          - production-demo
+
+jobs:
+  demo-workflow:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Step 1 - Start workflow
+        run: |
+          echo "GitHub Actions workflow started"
+          echo "Selected environment: ${{ inputs.environment }}"
+
+      - name: Step 2 - Build
+        run: |
+          echo "Building the application..."
+          sleep 2
+          echo "Build completed successfully"
+
+      - name: Step 3 - Test
+        run: |
+          echo "Running tests..."
+          sleep 2
+          echo "Test 1 passed"
+          echo "Test 2 passed"
+          echo "All tests passed"
+
+      - name: Step 4 - Deploy
+        run: |
+          echo "Deploying to ${{ inputs.environment }}..."
+          sleep 2
+          echo "Deployment completed successfully"
+
+      - name: Step 5 - Finish
+        run: |
+          echo "Workflow completed successfully"
